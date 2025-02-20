@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,9 +22,8 @@ public class AddEmployeePage {
     @FindBy(xpath = "//div[contains(@class, 'oxd-input-group')][.//label[text()='Employee Id']]//input")
     private WebElement enterAnEmployeeId;
 
-    @FindBy(xpath = "//button[@class='oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space']")
+    @FindBy(xpath = "//button[contains(@class,'orangehrm-left-space') and text()=' Save ']")
     private WebElement pressSaveButton;
-
 
     //Constructor
     public AddEmployeePage(WebDriver driver) {
@@ -36,8 +36,9 @@ public class AddEmployeePage {
         enterFirstName.sendKeys(firstName);
         enterMiddleName.sendKeys(middleName);
         enterLastName.sendKeys(lastName);
+        enterAnEmployeeId.sendKeys(Keys.CONTROL + "a"); // Select all text
+        enterAnEmployeeId.sendKeys(Keys.BACK_SPACE); // Delete selected text
         enterAnEmployeeId.sendKeys(employeeId);
-        pressSaveButton.click();
     }
 
     //method for pressing Save button
