@@ -34,6 +34,12 @@ public class EmployeePersonalDetailsPage {
     @FindBy(xpath = "//div[@class='orangehrm-custom-fields']")
     private WebElement customFieldsSection;
 
+    @FindBy(xpath = "//div[@role='tab' and @class='orangehrm-tabs-wrapper']/a[@class='orangehrm-tabs-item' and text()='Salary']")
+    private WebElement salarySection;
+
+    @FindBy(xpath = "//div[@role='tab' and contains(@class, 'orangehrm-tabs-wrapper')]/a[@class='orangehrm-tabs-item' and text()='Job']")
+    private WebElement jobSection;
+
     //constructor
     public EmployeePersonalDetailsPage(WebDriver driver) {
         this.driver = driver;
@@ -81,4 +87,13 @@ public class EmployeePersonalDetailsPage {
         buttonEmployeeList.click();
     }
 
+    //method to access Salary Section
+    public void switchToSalarySection() {
+        salarySection.click();
+    }
+
+    //method to access Job Section
+    public void switchToJobSection() {
+        jobSection.click();
+    }
 }

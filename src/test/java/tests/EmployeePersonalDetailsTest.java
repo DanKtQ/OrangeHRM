@@ -8,9 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EmployeePersonalDetailsTest extends TestBase {
 
-    //Login into the site. Go to PIM section and create a new employee. Go back to Employee List and delete the newly created employee record.
+    // Login into the site. Go to PIM section and create a new employee. Verify employee details.
+    // Go back to Employee List, search by ID and delete the newly created employee record.
     @Test
-    public void checkPersonalDetailsOfANewEmployee() {
+    public void checkPersonalDetailsOfANewEmployee() throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginAs("Admin", "admin123");
 
@@ -47,13 +48,14 @@ public class EmployeePersonalDetailsTest extends TestBase {
         waitForPageToLoad("https://opensource-demo.orangehrmlive.com/web/index.php/pim/viewEmployeeList", 10);
 
         pimPage.setSearchForEmployeeId("220890");
-        waitForElementToBeClickable(By.xpath("//button[contains(@class,'orangehrm-left-space')]"), 10);
+        waitForElementToBeClickable(By.xpath("//button[@type='submit' and contains(@class, 'oxd-button') and contains(@class, 'oxd-button--secondary') and text()=' Search ']"), 10);
+        Thread.sleep(3000);
         pimPage.pressSearchButton();
 
         waitForElementToBeVisible(By.xpath("//div[@class='oxd-table-cell oxd-padding-cell' and @role='cell']/div[text()='220890']"), 10);
         assertEquals("220890", pimPage.getEmployeeIdSearchResult());
 
-        waitForElementToBeClickable(By.xpath("//span[contains(@class, 'oxd-checkbox-input') and contains(@class, 'oxd-checkbox-input--active')]"), 10);
+        waitForElementToBeClickable(By.xpath("(//div[@class='oxd-table-cell oxd-padding-cell' and @role='cell'])[1]"), 10);
         pimPage.pressEmployeeResultCheckbox();
 
         waitForElementToBeClickable(By.xpath("//button[@class='oxd-button oxd-button--medium oxd-button--label-danger orangehrm-horizontal-margin']"), 10);
