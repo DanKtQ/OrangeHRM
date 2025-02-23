@@ -45,6 +45,9 @@ public class PimPage {
     @FindBy(xpath = "//div[@class='orangehrm-container']")
     private WebElement recordsSection;
 
+    @FindBy(xpath = "//div[contains(@class, 'oxd-input-group')][.//label[text()='Include']]//div[contains(@class, 'oxd-select-wrapper')]")
+    private WebElement includeDropdownButton;
+
     //Constructor
     public PimPage(WebDriver driver) {
         this.driver = driver;
@@ -109,5 +112,10 @@ public class PimPage {
     //method to click on Sub Unit dropdown button
     public void setSubUnitDropDownButton() {
         subUnitDropDownButton.click();
+    }
+
+    //method to select Include button
+    public void selectIncludeButton(){
+        includeDropdownButton.click();
     }
 }
