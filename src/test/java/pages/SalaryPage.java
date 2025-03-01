@@ -1,9 +1,14 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class SalaryPage {
 
@@ -48,9 +53,26 @@ public class SalaryPage {
         PageFactory.initElements(driver, this);
     }
 
+    // WebDriverWait Helpers
+    public void waitForElementToBeVisible(By locator, int timeoutSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public void waitForElementToBeClickable(By locator, int timeoutSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    public void waitForPageToLoad(String expectedUrl, int timeoutSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+        wait.until(ExpectedConditions.urlToBe(expectedUrl));
+    }
+
     //method to click on the salary component add button
     public void setAddSalaryComponentsButton() {
         addSalaryComponentsButton.click();
+        waitForElementToBeVisible(By.xpath("//div[@class='orangehrm-horizontal-padding orangehrm-vertical-padding']"), 10);
     }
 
     //method to set a salary component
@@ -61,16 +83,34 @@ public class SalaryPage {
     //method to select a pay grade
     public void setPayGradeField() {
         payGradeField.click();
+        // Wait for options to be visible
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[text()='Pay Grade']/following::div[contains(@class, 'oxd-select-wrapper')][1]")));
+        // Click "Grade 5" from the dropdown list
+        WebElement grade5 = driver.findElement(By.xpath("//label[text()='Pay Grade']/following::div[contains(@class, 'oxd-select-wrapper')][1]//span[text()='Grade 5']"));
+        grade5.click();
     }
 
     //method to select a pay frequency
     public void setPayFrequencyField() {
         payFrequencyField.click();
+        // Wait for options to be visible
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[text()='Pay Frequency']/following::div[contains(@class, 'oxd-select-wrapper')][1]")));
+        // Click "Monthly" from the dropdown list
+        WebElement monthly = driver.findElement(By.xpath("//label[text()='Pay Frequency']/following::div[contains(@class, 'oxd-select-wrapper')][1]//span[text()='Monthly']"));
+        monthly.click();
     }
 
     //method to select a currency
     public void setCurrencyField() {
         currencyField.click();
+        // Wait for options to be visible
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[text()='Currency']/following::div[contains(@class, 'oxd-select-wrapper')][1]")));
+        // Click "United States Dollar" from the dropdown list
+        WebElement freqeuency = driver.findElement(By.xpath("//label[text()='Currency']/following::div[contains(@class, 'oxd-select-wrapper')][1]//span[text()='United States Dollar']"));
+        freqeuency.click();
     }
 
     //method to set an amount
@@ -81,6 +121,7 @@ public class SalaryPage {
     //method to press save button
     public void setSaveButton() {
         saveButton.click();
+        waitForElementToBeVisible(By.xpath("//span[@class='oxd-text oxd-text--span' and text()='(1) Record Found']"), 10);
     }
 
     //method to retrieve salaryComponentCell

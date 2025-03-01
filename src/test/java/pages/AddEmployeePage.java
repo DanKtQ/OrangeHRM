@@ -1,10 +1,15 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class AddEmployeePage {
 
@@ -31,6 +36,22 @@ public class AddEmployeePage {
         PageFactory.initElements(driver, this);
     }
 
+    // WebDriverWait Helpers
+    public void waitForElementToBeVisible(By locator, int timeoutSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public void waitForElementToBeClickable(By locator, int timeoutSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    public void waitForPageToLoad(String expectedUrl, int timeoutSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+        wait.until(ExpectedConditions.urlToBe(expectedUrl));
+    }
+
     //method for filling the fields
     public void fillingAs(String firstName, String middleName, String lastName, String employeeId) {
         enterFirstName.sendKeys(firstName);
@@ -43,6 +64,7 @@ public class AddEmployeePage {
 
     //method for pressing Save button
     public void setPressSaveButton() {
+        waitForElementToBeClickable(By.xpath("//button[contains(@class,'orangehrm-left-space') and text()=' Save ']"), 10);
         pressSaveButton.click();
     }
 

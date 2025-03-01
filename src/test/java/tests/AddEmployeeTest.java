@@ -1,7 +1,6 @@
 package tests;
 
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import pages.AddEmployeePage;
 import pages.DashboardPage;
 import pages.LoginPage;
@@ -28,7 +27,6 @@ public class AddEmployeeTest extends TestBase {
         AddEmployeePage addEmployee = new AddEmployeePage(driver);
         addEmployee.fillingAs("Gandalf", "Jarl", "Balder", "220888");
 
-        waitForElementToBeClickable(By.xpath("//button[contains(@class,'orangehrm-left-space') and text()=' Save ']"), 10);
         addEmployee.setPressSaveButton();
     }
 }
